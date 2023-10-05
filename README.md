@@ -37,10 +37,12 @@ Agora, caso o cardápio seja escolhido, o usuário irá receber a seguinte lista
 
 Então aqui constam as operações básicas para os alimentos do cardápio. Vale dizer que os alimentos podem receber “Adicionais”, que seriam temperos, acessórios, e outros, que dependem do alimento em questão. Um “Adicional” não existe sem o alimento no sistema, portanto, alimento é uma composição de adicionais.
 
+Ainda, é possível fazer vendas de ingressos e de alimentos, e a partir desses registros, são gerados relatórios.
+
 Em relação ao escopo, há:
 - **Cadastros**: filmes e alimentos;
-- **Registros**: adicionais e gêneros;
-- **Relatórios**: manejo de catálogo e de cardápio.
+- **Registros**: venda de ingressos e alimentos;
+- **Relatórios**: relatórios de vendas de ingressos e alimentos.
 
 ### SEPARAÇÃO DAS  IMPLEMENTAÇÕES:
 
