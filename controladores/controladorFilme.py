@@ -1,5 +1,6 @@
 from telas.telaFilme import TelaFilme
 from controladorGenero import ControladorGenero
+from entidades.filme import Filme
 
 
 class ControladorFilme():
@@ -13,14 +14,38 @@ class ControladorFilme():
         operacao = self.__tela.escolhe_operacao()
 
         if operacao == 1:
-            self.adiciona_item(self.__filmes)
+            self.adiciona_item()
         elif operacao == 2:
-            self.remove_item(self.__filmes)
+            self.remove_item()
         elif operacao == 3:
-            self.edita_item(self.__filmes)
+            self.edita_item()
         elif operacao == 4:
-            self.lista_itens(self.__filmes)
+            self.lista_itens()
+
+    def __busca_filme(self, codigo: int):
+        for filme in self.__filmes:
+            if filme.codigo == codigo:
+                return filme
+
+    def adiciona_item(self):
+        nome = self.__tela.escolhe_nome()
+
+        lista_codigos = [filme.codigo for filme in self.__filmes]
+        codigo = max(lista_codigos) + 1
+
+        self.__filmes.append(Filme(nome, codigo))
+
+    def remove_item(self):
+        codigo = self.__tela.escolhe_codigo()
+        filme = self.__busca_filme(codigo)
+
+        self.__filmes.remove(filme)
 
     def edita_item(self):
         self.__ctrl_genero.lista_generos()
         self.__ctrl_genero.adiciona_genero()
+
+    def lista_itens(self):
+        print('Código: Filme')
+        for filme in self.__filmes:
+            print(f'{filme.codigo}: {filme.nome}')
