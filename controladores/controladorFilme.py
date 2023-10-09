@@ -46,6 +46,4 @@ class ControladorFilme():
         self.__ctrl_genero.adiciona_genero()
 
     def lista_itens(self):
-        print('Código: Filme')
-        for filme in self.__filmes:
-            print(f'{filme.codigo}: {filme.nome}')
+        pass
