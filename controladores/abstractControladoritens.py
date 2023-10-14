@@ -23,5 +23,5 @@ class AbstractControladorItens(ABC):
         pass
 
     @abstractmethod
-    def lista_item(self):
+    def lista_itens(self):
         pass

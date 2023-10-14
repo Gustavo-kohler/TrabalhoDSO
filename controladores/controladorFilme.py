@@ -1,5 +1,5 @@
 from telas.telaFilme import TelaFilme
-from controladorGenero import ControladorGenero
+from controladores.controladorGenero import ControladorGenero
 from entidades.filme import Filme
 
 
@@ -21,6 +21,12 @@ class ControladorFilme():
             self.edita_item()
         elif operacao == 4:
             self.lista_itens()
+        elif operacao == 5:
+            pass
+        elif operacao == 6:
+            self.__ctrl_genero.adiciona_genero()
+        elif operacao == 7:
+            self.__ctrl_genero.lista_generos()
 
     def __busca_filme(self, codigo: int):
         for filme in self.__filmes:
@@ -31,7 +37,11 @@ class ControladorFilme():
         nome = self.__tela.escolhe_nome()
 
         lista_codigos = [filme.codigo for filme in self.__filmes]
-        codigo = max(lista_codigos) + 1
+
+        if len(lista_codigos) == 0:
+            codigo = 1
+        else:
+            codigo = max(lista_codigos) + 1
 
         self.__filmes.append(Filme(nome, codigo))
 
@@ -41,9 +51,27 @@ class ControladorFilme():
 
         self.__filmes.remove(filme)
 
+    # tá cagado
     def edita_item(self):
-        self.__ctrl_genero.lista_generos()
-        self.__ctrl_genero.adiciona_genero()
+        tem_filmes = self.lista_itens()
+        if not tem_filmes:
+            print('Não há filmes. Adicione um para usar essa função.')
+            return False
+        filme_codigo = self.__tela.escolhe_codigo()
+
+        tem_generos = self.__ctrl_genero.lista_generos()
+        if not tem_generos:
+            print('Não há gêneros. Adicione um para usar essa função.')
+            return False
+        genero_codigo = self.__tela.escolhe_codigo()
+
+        filme = self.__busca_filme(filme_codigo)
+        genero = self.__ctrl_genero.busca_genero(genero_codigo)
+
+        filme.adiciona_genero(genero)
 
     def lista_itens(self):
-        pass
+        if len(self.__filmes):
+            self.__tela.mostra_itens(self.__filmes)
+            return True
+        return False

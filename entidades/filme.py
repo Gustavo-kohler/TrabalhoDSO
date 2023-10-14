@@ -1,4 +1,4 @@
-from genero import Genero
+from entidades.genero import Genero
 
 
 class Filme():

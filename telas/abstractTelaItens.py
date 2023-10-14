@@ -3,10 +3,6 @@ from abc import ABC, abstractmethod
 
 class AbstractTelaItens(ABC):
     @abstractmethod
-    def __init__(self) -> None:
-        pass
-
-    @abstractmethod
     def imprime_operacoes(self):
         pass
 

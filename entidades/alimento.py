@@ -1,4 +1,4 @@
-from adicional import Adicional
+from entidades.adicional import Adicional
 
 
 class Alimento():

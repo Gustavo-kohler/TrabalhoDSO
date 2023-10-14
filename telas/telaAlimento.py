@@ -1,8 +1,8 @@
-from abstractTelaItens import AbstractTelaItens
+from telas.abstractTelaItens import AbstractTelaItens
 
 
 class TelaAlimento(AbstractTelaItens):
-    def __imprime_operacoes(self):
+    def imprime_operacoes(self):
         print('1 - Adicionar alimento')
         print('2 - Remover alimento')
         print('3 - Editar alimento')
@@ -13,7 +13,7 @@ class TelaAlimento(AbstractTelaItens):
         print('Escolha uma operação.')
         return int(input())
 
-    def mostra_iten(self, codigo, nome, preco):
+    def mostra_itens(self, codigo, nome, preco):
         print(f'{codigo}: {nome} -> {preco}')
 
     def escolhe_codigo(self):
