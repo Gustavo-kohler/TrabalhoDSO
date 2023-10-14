@@ -1,7 +1,7 @@
-from controladorCinema import ControladorCinema
-from controladorFilme import ControladorFilme
-from controladorAlimento import ControladorAlimento
-from controladorRelatorio import ControladorRelatorio
+from controladores.controladorCinema import ControladorCinema
+from controladores.controladorFilme import ControladorFilme
+from controladores.controladorAlimento import ControladorAlimento
+from controladores.controladorRelatorio import ControladorRelatorio
 
 
 class ControladorPrincipal():
@@ -11,6 +11,8 @@ class ControladorPrincipal():
         self.__ctrl_alimento = ControladorAlimento()
         self.__ctrl_relatorio = ControladorRelatorio()
 
+        self.inicia_sistema()
+
     def inicia_sistema(self):
         rodando = True
 
@@ -18,9 +20,9 @@ class ControladorPrincipal():
             operacao = self.__ctrl_cinema.bem_vindo()
 
             if operacao == 1:
-                self.__ctrl_filme.lista_operacoes()
-            elif operacao == 2:
                 self.__ctrl_alimento.lista_operacoes()
+            elif operacao == 2:
+                self.__ctrl_filme.lista_operacoes()
             elif operacao == 3:
                 rodando = False
 

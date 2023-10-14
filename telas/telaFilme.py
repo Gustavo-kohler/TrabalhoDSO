@@ -1,8 +1,8 @@
-from abstractTelaItens import AbstractTelaItens
+from telas.abstractTelaItens import AbstractTelaItens
 
 
 class TelaFilme(AbstractTelaItens):
-    def __imprime_operacoes(self):
+    def imprime_operacoes(self):
         print('1 - Adicionar filme')
         print('2 - Remover filme')
         print('3 - Editar filme')
@@ -13,13 +13,19 @@ class TelaFilme(AbstractTelaItens):
 
     def escolhe_operacao(self):
         print('Escolha uma operação.')
-        self.__imprime_operacoes()
         return int(input())
 
-    def mostra_itens(self):
-        print('Código: Filme')
-        for filme in self.__filmes:
-            print(f'{filme.codigo}: {filme.nome}')
+    def mostra_itens(self, filmes):
+        print('Código: Filme (Gêneros)')
+        for filme in filmes:
+            genero_str = ''
+            if filme.generos > 0:
+                for genero in filme.generos:
+                    genero_str += genero.nome + ' '
+            else:
+                genero_str = '-'
+
+            print(f'{filme.codigo}: {filme.nome} ({genero_str})')
 
     def escolhe_codigo(self):
         return int(input('Insira um código: '))

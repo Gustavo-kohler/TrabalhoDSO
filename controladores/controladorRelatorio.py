@@ -5,7 +5,7 @@ from entidades.relatorio import Relatorio
 class ControladorRelatorio():
     def __init__(self) -> None:
         self.__tela = TelaRelatorio()
-        self.__relatorios = []
+        self.__relatorios = []  # type: list
 
     def lista_relatorio(self):
         for relatorio in self.__relatorios:

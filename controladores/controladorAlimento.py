@@ -33,7 +33,10 @@ class ControladorAlimento(AbstractControladorItens):
         preco = self.__tela.escolhe_preco()
 
         lista_codigos = [alimento.codigo for alimento in self.__alimentos]
-        codigo = max(lista_codigos) + 1
+        if len(lista_codigos) == 0:
+            codigo = 1
+        else:
+            codigo = max(lista_codigos) + 1
 
         self.__alimentos.append(Alimento(nome, codigo, preco))
 
@@ -55,9 +58,9 @@ class ControladorAlimento(AbstractControladorItens):
             self.__busca_alimento(codigo).adiciona_adicional(
                 self.__tela.escolhe_nome)
 
-    def lista_item(self):
+    def lista_itens(self):
         for alimento in self.__alimentos:
-            self.__tela.mostra_iten(
+            self.__tela.mostra_itens(
                 alimento.codigo(), alimento.nome(), alimento.preco())
 
     def vende_alimento(self):
