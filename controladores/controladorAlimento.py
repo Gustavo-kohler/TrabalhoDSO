@@ -21,9 +21,9 @@ class ControladorAlimento(AbstractControladorItens):
         elif operacao == 4:
             self.lista_itens()
         elif operacao == 5:
-            self.vende_alimento()
+            return self.vende_alimento()
 
-    def __busca_alimento(self, codigo: int):
+    def busca_alimento(self, codigo: int):
         for alimento in self.__alimentos:
             if alimento.codigo == codigo:
                 return alimento
@@ -42,31 +42,36 @@ class ControladorAlimento(AbstractControladorItens):
 
     def remove_item(self):
         codigo = self.__tela.escolhe_codigo()
-        alimento = self.__busca_alimento(codigo)
+        alimento = self.busca_alimento(codigo)
 
         self.__alimentos.remove(alimento)
 
     def edita_item(self):
+        tem_alimento = self.lista_itens()
+        if not tem_alimento:
+            print('Não há alimentos. Adicione um para usar essa função.')
+            return False
         codigo = self.__tela.escolhe_codigo()
 
         self.__tela.mostra_edicao()
         operacao = self.__tela.escolhe_operacao()
 
+        alimento = self.busca_alimento(codigo)
+
         if operacao == 1:
-            self.__busca_alimento(codigo).preco(self.__tela.escolhe_preco)
+            novo_preco = self.__tela.escolhe_preco()
+            alimento.preco = novo_preco
         elif operacao == 2:
-            self.__busca_alimento(codigo).adiciona_adicional(
-                self.__tela.escolhe_nome)
+            novo_nome = self.__tela.escolhe_nome()
+            alimento.adiciona_adicional(novo_nome)
 
     def lista_itens(self):
-        for alimento in self.__alimentos:
-            self.__tela.mostra_itens(
-                alimento.codigo(), alimento.nome(), alimento.preco())
+        return self.__tela.mostra_itens(self.__alimentos)
 
     def vende_alimento(self):
         codigo = self.__tela.escolhe_codigo()
         quantidade = self.__tela.escolhe_quantidade()
 
-        alimento = self.__busca_alimento(codigo)
+        alimento = self.busca_alimento(codigo)
 
-        return alimento.nome(), quantidade
+        return alimento.nome, quantidade
