@@ -17,4 +17,4 @@ class ControladorRelatorio():
 
     def adiciona_relatorio(self, nome, quantidade):
         self.__relatorios.append(
-            Relatorio(self.__relatorios.len(), nome, quantidade))
+            Relatorio(len(self.__relatorios), nome, quantidade))
