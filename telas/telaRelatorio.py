@@ -2,7 +2,7 @@
 
 class TelaRelatorio():
     def mostra_relatorio(self, codigo, nome, quantidade):
-        print(f"{codigo}: vendido {quantidade} {nome}")
+        print(f"\n{codigo}: vendido {quantidade} {nome}")
 
-    def nunhum_relatorio():
-        print("Nenhum relatorio.")
+    def nunhum_relatorio(self):
+        print("\nNenhum relatorio.\n")

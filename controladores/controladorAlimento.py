@@ -74,4 +74,4 @@ class ControladorAlimento(AbstractControladorItens):
 
         alimento = self.busca_alimento(codigo)
 
-        return alimento.nome, quantidade
+        return [alimento.nome, quantidade]
