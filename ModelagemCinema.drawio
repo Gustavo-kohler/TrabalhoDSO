@@ -338,18 +338,6 @@
                         <mxPoint x="680" y="490" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="-zZR3hwUNW0yP9_59fh9-20" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" source="0vM7nS2TvoHmR3BYnDFP-45" target="0vM7nS2TvoHmR3BYnDFP-13" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="520" y="370" as="sourcePoint"/>
-                        <mxPoint x="680" y="370" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="-zZR3hwUNW0yP9_59fh9-21" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" source="0vM7nS2TvoHmR3BYnDFP-17" target="0vM7nS2TvoHmR3BYnDFP-13" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="520" y="370" as="sourcePoint"/>
-                        <mxPoint x="680" y="370" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="2" value="TelaAlimento" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
                     <mxGeometry x="65" y="657" width="160" height="110" as="geometry"/>
                 </mxCell>
