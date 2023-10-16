@@ -22,7 +22,7 @@ class ControladorPrincipal():
             if operacao == 1:
                 self.gera_relatorio(self.__ctrl_alimento.lista_operacoes())
             elif operacao == 2:
-                self.__ctrl_filme.lista_operacoes()
+                self.gera_relatorio(self.__ctrl_filme.lista_operacoes())
             elif operacao == 3:
                 self.__ctrl_relatorio.lista_relatorio()
             elif operacao == 4:
