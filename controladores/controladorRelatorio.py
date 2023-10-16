@@ -13,7 +13,7 @@ class ControladorRelatorio():
                 self.__tela.mostra_relatorio(
                     relatorio.codigo, relatorio.nome, relatorio.quantidade)
         else:
-            self.__tela.nunhum_relatorio()
+            self.__tela.nenhum_relatorio()
 
     def adiciona_relatorio(self, nome, quantidade):
         self.__relatorios.append(

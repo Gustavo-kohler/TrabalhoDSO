@@ -7,4 +7,4 @@ class TelaCinema():
         print("1 - Lanchonete\n2 - Filmes\n3 - Relatório\n4 - Desliga sistema")
 
     def escolhe_operacao(self):
-        return int(input("operação: "))
+        return input("operação: ")

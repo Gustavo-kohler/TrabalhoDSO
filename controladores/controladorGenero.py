@@ -5,7 +5,7 @@ from entidades.genero import Genero
 class ControladorGenero():
     def __init__(self) -> None:
         self.__tela = TelaGenero()
-        self.__generos = [Genero("Comédia", 1)]  # type: list
+        self.__generos = []  # type: list
 
     def lista_generos(self):
         return self.__tela.mostra_generos(self.__generos)
