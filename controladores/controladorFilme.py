@@ -7,7 +7,7 @@ class ControladorFilme():
     def __init__(self) -> None:
         self.__tela = TelaFilme()
         self.__ctrl_genero = ControladorGenero()
-        self.__filmes = []  # type: list
+        self.__filmes = [Filme("Genérico", 1)]  # type: list
 
     def lista_operacoes(self):
         self.__tela.imprime_operacoes()
@@ -22,7 +22,7 @@ class ControladorFilme():
         elif operacao == 4:
             self.lista_itens()
         elif operacao == 5:
-            pass
+            return self.vende_filme()
         elif operacao == 6:
             self.__ctrl_genero.adiciona_genero()
         elif operacao == 7:
@@ -51,17 +51,22 @@ class ControladorFilme():
 
         self.__filmes.remove(filme)
 
-    # tá cagado
+    def vende_filme(self):
+        codigo = self.__tela.escolhe_codigo()
+        quantidade = self.__tela.escolhe_quantidade()
+
+        filme = self.__busca_filme(codigo)
+
+        return [filme.nome, quantidade]
+
     def edita_item(self):
         tem_filmes = self.lista_itens()
         if not tem_filmes:
-            print('Não há filmes. Adicione um para usar essa função.')
             return False
         filme_codigo = self.__tela.escolhe_codigo()
 
         tem_generos = self.__ctrl_genero.lista_generos()
         if not tem_generos:
-            print('Não há gêneros. Adicione um para usar essa função.')
             return False
         genero_codigo = self.__tela.escolhe_codigo()
 
@@ -71,7 +76,4 @@ class ControladorFilme():
         filme.adiciona_genero(genero)
 
     def lista_itens(self):
-        if len(self.__filmes):
-            self.__tela.mostra_itens(self.__filmes)
-            return True
-        return False
+        return self.__tela.mostra_itens(self.__filmes)

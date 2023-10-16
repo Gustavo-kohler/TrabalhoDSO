@@ -16,22 +16,29 @@ class TelaFilme(AbstractTelaItens):
         return int(input())
 
     def mostra_itens(self, filmes):
-        print('Código: Filme (Gêneros)')
-        for filme in filmes:
-            genero_str = ''
-            if filme.generos > 0:
-                for genero in filme.generos:
-                    genero_str += genero.nome + ' '
-            else:
-                genero_str = '-'
+        if len(filmes) > 0:
+            print('Código: Filme (Gêneros)')
+            for filme in filmes:
+                genero_str = ''
+                if len(filme.generos) > 0:
+                    for genero in filme.generos:
+                        genero_str += genero.nome + ' '
+                else:
+                    genero_str = '-'
 
-            print(f'{filme.codigo}: {filme.nome} ({genero_str})')
+                print(f'{filme.codigo}: {filme.nome} ({genero_str})')
+            return True
+        print('Não há filmes.')
+        return False
 
     def escolhe_codigo(self):
         return int(input('Insira um código: '))
 
     def escolhe_nome(self):
         return input('Insira um nome: ')
+
+    def escolhe_quantidade(self):
+        return int(input('Insira uma quantidade: '))
 
     def imprime_edicao(self):
         print('Edite o filme adicionando um gênero.')
