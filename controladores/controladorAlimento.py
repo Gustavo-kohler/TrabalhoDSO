@@ -10,7 +10,8 @@ class ControladorAlimento(AbstractControladorItens):
 
     def lista_operacoes(self):
         self.__tela.imprime_operacoes()
-        operacao = self.__tela.escolhe_operacao()
+
+        operacao = int(self.__tela.escolhe_operacao())
 
         if operacao == 1:
             self.adiciona_item()
@@ -22,6 +23,31 @@ class ControladorAlimento(AbstractControladorItens):
             self.lista_itens()
         elif operacao == 5:
             return self.vende_alimento()
+        else:
+            print('Valor inserido não condiz com os disponíveis.')
+            print('Tente novamente.')
+
+        '''
+        try:
+            operacao = int(self.__tela.escolhe_operacao())
+
+            if operacao == 1:
+                self.adiciona_item()
+            elif operacao == 2:
+                self.remove_item()
+            elif operacao == 3:
+                self.edita_item()
+            elif operacao == 4:
+                self.lista_itens()
+            elif operacao == 5:
+                return self.vende_alimento()
+            else:
+                print('Valor inserido não condiz com os disponíveis.')
+                print('Tente novamente.')
+        except ValueError:
+            print('Valor inserido não é inteiro.')
+            print('Tente novamente.')
+        '''
 
     def busca_alimento(self, codigo: int):
         for alimento in self.__alimentos:

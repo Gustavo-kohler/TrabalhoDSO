@@ -19,14 +19,23 @@ class ControladorPrincipal():
         while rodando:
             operacao = self.__ctrl_cinema.bem_vindo()
 
-            if operacao == 1:
-                self.gera_relatorio(self.__ctrl_alimento.lista_operacoes())
-            elif operacao == 2:
-                self.gera_relatorio(self.__ctrl_filme.lista_operacoes())
-            elif operacao == 3:
-                self.__ctrl_relatorio.lista_relatorio()
-            elif operacao == 4:
-                rodando = False
+            try:
+                operacao = int(operacao)
+
+                if operacao == 1:
+                    self.gera_relatorio(self.__ctrl_alimento.lista_operacoes())
+                elif operacao == 2:
+                    self.gera_relatorio(self.__ctrl_filme.lista_operacoes())
+                elif operacao == 3:
+                    self.__ctrl_relatorio.lista_relatorio()
+                elif operacao == 4:
+                    rodando = False
+                else:
+                    print('Valor inserido não condiz com os disponíveis.')
+                    print('Tente novamente.')
+            except ValueError:
+                print('Valor inserido apresenta problemas de valor.')
+                print('Tente novamente.')
 
     def fornece_relatorio(self):
         self.__ctrl_relatorio.lista_relatorio()
