@@ -7,7 +7,7 @@ class ControladorFilme():
     def __init__(self) -> None:
         self.__tela = TelaFilme()
         self.__ctrl_genero = ControladorGenero()
-        self.__filmes = [Filme("Genérico", 1)]  # type: list
+        self.__filmes = []  # type: list
 
     def lista_operacoes(self):
         self.__tela.imprime_operacoes()
@@ -32,6 +32,7 @@ class ControladorFilme():
         for filme in self.__filmes:
             if filme.codigo == codigo:
                 return filme
+        raise EOFError
 
     def adiciona_item(self):
         nome = self.__tela.escolhe_nome()

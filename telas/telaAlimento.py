@@ -45,3 +45,6 @@ class TelaAlimento(AbstractTelaItens):
     def mostra_edicao(self):
         print('\n1 - Editar preço')
         print('2 - Adiciona adicional\n')
+
+    def informa_remocao(self):
+        print('Item removido com sucesso!')
