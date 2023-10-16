@@ -10,7 +10,7 @@ class TelaAlimento(AbstractTelaItens):
         print('5 - Vender alimento\n')
 
     def escolhe_operacao(self):
-        return int(input('Escolha uma operação: '))
+        return input('Escolha uma operação: ')
 
     def mostra_itens(self, alimentos):
         if len(alimentos):
@@ -45,3 +45,6 @@ class TelaAlimento(AbstractTelaItens):
     def mostra_edicao(self):
         print('\n1 - Editar preço')
         print('2 - Adiciona adicional\n')
+
+    def informa_remocao(self):
+        print('Item removido com sucesso!')

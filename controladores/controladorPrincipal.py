@@ -17,16 +17,30 @@ class ControladorPrincipal():
         rodando = True
 
         while rodando:
-            operacao = self.__ctrl_cinema.bem_vindo()
+            try:
+                operacao = self.__ctrl_cinema.bem_vindo()
 
-            if operacao == 1:
-                self.gera_relatorio(self.__ctrl_alimento.lista_operacoes())
-            elif operacao == 2:
-                self.gera_relatorio(self.__ctrl_filme.lista_operacoes())
-            elif operacao == 3:
-                self.__ctrl_relatorio.lista_relatorio()
-            elif operacao == 4:
-                rodando = False
+                operacao = int(operacao)
+
+                if operacao == 1:
+                    self.gera_relatorio(self.__ctrl_alimento.lista_operacoes())
+                elif operacao == 2:
+                    self.gera_relatorio(self.__ctrl_filme.lista_operacoes())
+                elif operacao == 3:
+                    self.__ctrl_relatorio.lista_relatorio()
+                elif operacao == 4:
+                    rodando = False
+                else:
+                    print('Valor inserido não condiz com os disponíveis.')
+                    print('Tente novamente.')
+            except ValueError:
+                print('Valor inserido apresenta incompatibilidade de tipo.')
+                print('Tente novamente.')
+            except EOFError:
+                print('Não foi encontrado o valor.')
+            except KeyboardInterrupt:
+                print('\nHouve uma tentativa de interromper o programa.')
+                print('Retornando ao menu principal...')
 
     def fornece_relatorio(self):
         self.__ctrl_relatorio.lista_relatorio()
