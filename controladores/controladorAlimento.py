@@ -72,7 +72,19 @@ class ControladorAlimento(AbstractControladorItens):
             alimento.adiciona_adicional(novo_nome)
 
     def lista_itens(self):
-        return self.__tela.mostra_itens(self.__alimentos)
+        if len(self.__alimentos) > 0:
+            for alimento in self.__alimentos:
+                adicionais_str = ''
+                if len(alimento.adicionais) > 0:
+                    for adicionais in alimento.adicionais:
+                        adicionais_str += adicionais.nome + ' '
+                else:
+                    adicionais_str = '-'
+
+                self.__tela.mostra_itens(
+                    alimento.codigo, alimento.nome, adicionais_str, alimento.preco)
+        else:
+            self.__tela.nenhum_alimento()
 
     def vende_alimento(self):
         codigo = self.__tela.escolhe_codigo()
@@ -80,4 +92,4 @@ class ControladorAlimento(AbstractControladorItens):
 
         alimento = self.busca_alimento(codigo)
 
-        return [alimento.nome, quantidade]
+        return [alimento, quantidade]

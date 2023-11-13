@@ -1,9 +1,9 @@
 
 
 class Relatorio():
-    def __init__(self, codigo, nome, quantidade) -> None:
+    def __init__(self, codigo, objeto, quantidade) -> None:
         self.__codigo = codigo
-        self.__nome = nome
+        self.__objeto = objeto
         self.__quantidade = quantidade
 
     @property
@@ -11,8 +11,8 @@ class Relatorio():
         return self.__codigo
 
     @property
-    def nome(self):
-        return self.__nome
+    def objeto(self):
+        return self.__objeto
 
     @property
     def quantidade(self):

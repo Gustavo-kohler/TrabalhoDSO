@@ -6,6 +6,11 @@ class Filme():
         self.__nome = nome
         self.__codigo = codigo
         self.__generos = []  # type: list
+        self.__preco = 20.0
+
+    @property
+    def preco(self):
+        return self.__preco
 
     @property
     def nome(self) -> str:

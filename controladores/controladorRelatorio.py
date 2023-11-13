@@ -11,10 +11,16 @@ class ControladorRelatorio():
         if len(self.__relatorios) > 0:
             for relatorio in self.__relatorios:
                 self.__tela.mostra_relatorio(
-                    relatorio.codigo, relatorio.nome, relatorio.quantidade)
+                    relatorio.codigo, relatorio.objeto.nome, relatorio.quantidade)
         else:
             self.__tela.nenhum_relatorio()
 
-    def adiciona_relatorio(self, nome, quantidade):
+    def adiciona_relatorio(self, objeto, quantidade):
         self.__relatorios.append(
-            Relatorio(len(self.__relatorios), nome, quantidade))
+            Relatorio(len(self.__relatorios), objeto, quantidade))
+
+    def total_vendas(self):
+        total = 0
+        for relatorio in self.__relatorios:
+            total += (relatorio.objeto.preco * relatorio.quantidade)
+        self.__tela.mostra_total(total)
