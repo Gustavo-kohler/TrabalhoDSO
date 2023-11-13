@@ -29,6 +29,8 @@ class ControladorPrincipal():
                 elif operacao == 3:
                     self.__ctrl_relatorio.lista_relatorio()
                 elif operacao == 4:
+                    self.__ctrl_relatorio.total_vendas()
+                elif operacao == 5:
                     rodando = False
                 else:
                     print('Valor inserido não condiz com os disponíveis.')

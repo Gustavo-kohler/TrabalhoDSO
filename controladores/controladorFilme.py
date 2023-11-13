@@ -58,7 +58,7 @@ class ControladorFilme():
 
         filme = self.__busca_filme(codigo)
 
-        return [filme.nome, quantidade]
+        return [filme, quantidade]
 
     def edita_item(self):
         tem_filmes = self.lista_itens()
@@ -77,4 +77,16 @@ class ControladorFilme():
         filme.adiciona_genero(genero)
 
     def lista_itens(self):
-        return self.__tela.mostra_itens(self.__filmes)
+        if len(self.__filmes) > 0:
+            for filme in self.__filmes:
+                generos_str = ''
+                if len(filme.generos) > 0:
+                    for generos in filme.generos:
+                        generos_str += generos.nome + ' '
+                else:
+                    generos_str = '-'
+
+                self.__tela.mostra_itens(
+                    filme.codigo, filme.nome, generos_str)
+        else:
+            self.__tela.nenhum_filme()
