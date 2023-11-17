@@ -1,10 +1,27 @@
+import PySimpleGUI as sg
 
 
 class TelaCinema():
-    def chama_bem_vindo(self, nome, cidade):
-        print(f"\nCinema {nome} da cidade {cidade}")
-        print("Selecione uma operação:")
-        print("1 - Lanchonete\n2 - Filmes\n3 - Relatório\n4 - Total de vendas\n5 - Desliga sistema")
+    def __init__(self):
+        self.__window = None
+        self.init_components()
 
-    def escolhe_operacao(self):
-        return input("operação: ")
+    def init_components(self):
+        sg.theme('DarkAmber')
+        layout = [
+            [sg.Button('Lanchonete')]
+            [sg.Button('Filmes')]
+            [sg.Button('Relatório')]
+        ]
+        self.__window = sg.Window('CineFalcão').Layout(layout)
+
+    def run_view(self):
+        running = True
+        events = ('Lanchonete', 'Filmes', 'Relatórios')
+        while running:
+            event, values = self.__window.read()
+            if event == sg.WIN_CLOSED:
+                running = False
+            elif event in events:
+                return values
+        self.__window.close()
