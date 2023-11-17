@@ -4,10 +4,12 @@ from entidades.cinema import Cinema
 
 class ControladorCinema():
     def __init__(self) -> None:
-        self.__tela = TelaCinema()
-        self.__cinema = Cinema("CineFalcão", "Florianópolis")
+        self.__tela_cinema = TelaCinema()
+        self.__evento = None
 
-    def bem_vindo(self):
-        self.__tela.chama_bem_vindo(self.__cinema.nome,
-                                    self.__cinema.cidade)
-        return self.__tela.escolhe_operacao()
+    @property
+    def evento(self) -> str:
+        return self.__evento
+
+    def gerencia_tela_principal(self) -> None:
+        self.__evento = self.__tela_cinema.run_tela_principal()

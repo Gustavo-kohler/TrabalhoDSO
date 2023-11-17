@@ -2,26 +2,18 @@ import PySimpleGUI as sg
 
 
 class TelaCinema():
-    def __init__(self):
-        self.__window = None
-        self.init_components()
+    def run_tela_principal(self):
+        categorias = ['Lanchonete', 'Filmes', 'Relatório']
 
-    def init_components(self):
         sg.theme('DarkAmber')
-        layout = [
-            [sg.Button('Lanchonete')]
-            [sg.Button('Filmes')]
-            [sg.Button('Relatório')]
-        ]
-        self.__window = sg.Window('CineFalcão').Layout(layout)
+        layout = list()
+        for categoria in categorias:
+            botao = [sg.Button(categoria)]
+            layout.append(botao)
+        window = sg.Window('CineFalcão').Layout(layout)
 
-    def run_view(self):
-        running = True
-        events = ('Lanchonete', 'Filmes', 'Relatórios')
-        while running:
-            event, values = self.__window.read()
-            if event == sg.WIN_CLOSED:
-                running = False
-            elif event in events:
-                return values
-        self.__window.close()
+        event, not_used_values = window.read()
+        if event == sg.WIN_CLOSED:
+            return None
+        else:
+            return categoria
