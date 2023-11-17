@@ -1,23 +1,26 @@
 from abc import ABC, abstractmethod
+import PySimpleGui as sg
 
 
 class AbstractTelaItens(ABC):
     @abstractmethod
-    def imprime_operacoes(self):
+    def __init__(self):
+        self.__window = None
+        self.init_components()
+
+    @abstractmethod
+    def init_components(self):
         pass
 
     @abstractmethod
-    def escolhe_operacao(self):
-        pass
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
 
     @abstractmethod
-    def mostra_itens(self):
-        pass
+    def close(self):
+        self.__window.Close()
 
     @abstractmethod
-    def escolhe_codigo(self):
-        pass
-
-    @abstractmethod
-    def escolhe_nome(self):
-        pass
+    def show_message(self, titulo: str, mensagem: str):
+        sg.Popup(titulo, mensagem)
