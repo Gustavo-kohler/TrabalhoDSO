@@ -1,12 +1,12 @@
 from telas.telaAlimento import TelaAlimento
-from entidades.alimento import Alimento
+from DAO.dao import DAO
 
 
 class ControladorAlimento():
     def __init__(self) -> None:
         self.__tela_cinema = TelaAlimento()
         self.__evento = None
-        self.__alimentos = []
+        self.__alimentosDAO = DAO()
 
     @property
     def evento(self) -> str:
