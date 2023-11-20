@@ -12,6 +12,13 @@ class Filme():
     def preco(self):
         return self.__preco
 
+    @preco.setter
+    def preco(self, novo_preco: float):
+        if isinstance(novo_preco, float):
+            self.__preco = novo_preco
+        else:
+            raise TypeError("O argumento fornecido não é do tipo float.")
+
     @property
     def nome(self) -> str:
         return self.__nome
@@ -19,7 +26,7 @@ class Filme():
     @nome.setter
     def nome(self, novo_nome: str) -> None:
         if isinstance(novo_nome, str):
-            self.__generos.append(novo_nome)
+            self.__nome = novo_nome
         else:
             raise TypeError("O argumento fornecido não é do tipo str.")
 
@@ -38,7 +45,7 @@ class Filme():
     def generos(self) -> list:
         return self.__generos
 
-    def adiciona_genero(self, novo_genero) -> None:
+    def inclui_genero(self, novo_genero) -> None:
         if isinstance(novo_genero, Genero):
             self.__generos.append(novo_genero)
         else:

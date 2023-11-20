@@ -1,14 +1,32 @@
+import PySimpleGUI as sg
 
 
 class TelaGenero():
-    def mostra_generos(self, generos):
-        print('Código: Gênero')
-        if len(generos) == 0:
-            print('Não há gêneros.')
-            return False
-        for genero in generos:
-            print(f'{genero.codigo}: {genero.nome}')
-        return True
+    def run_tela_genero(self, generos):
+        sg.theme('DarkAmber')
+        layout = [
+            [sg.Text('ADIÇÃO DE GÊNERO')],
+            [sg.Listbox(values=generos, size=(40, 10))],
+            [sg.Text('Por favor, insira o nome do genero.')],
+            [sg.Text('Nome'), sg.InputText()],
+            [sg.Button('Adicionar genero'), sg.Button('Cancelar')]
+        ]
 
-    def escolhe_nome(self):
-        return input('Insira um nome: ')
+        window = sg.Window('CineFalcão').Layout(layout)
+
+        adicionando_genero = True
+        while adicionando_genero:
+            try:
+                event, values = window.read()
+                if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
+                    window.close()
+                    return None
+                elif event == 'Adicionar genero':
+                    print(values)
+                    nome = values[1]
+
+                    window.close()
+                    return {'nome': nome}
+
+            except ValueError:
+                print('Valor inválido para o código.')

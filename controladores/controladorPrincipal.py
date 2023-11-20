@@ -6,10 +6,10 @@ from controladores.controladorRelatorio import ControladorRelatorio
 
 class ControladorPrincipal():
     def __init__(self) -> None:
+        self.__ctrl_relatorio = ControladorRelatorio()
         self.__ctrl_cinema = ControladorCinema()
-        self.__ctrl_filme = ControladorFilme()
-        # self.__ctrl_alimento = ControladorAlimento()
-        # self.__ctrl_relatorio = ControladorRelatorio()
+        self.__ctrl_filme = ControladorFilme(self.__ctrl_relatorio)
+        # self.__ctrl_alimento = ControladorAlimento(self.__ctrl_relatorio)
 
         self.gerencia_sistema()
 
