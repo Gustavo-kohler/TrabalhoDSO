@@ -7,7 +7,7 @@ from controladores.controladorRelatorio import ControladorRelatorio
 class ControladorPrincipal():
     def __init__(self) -> None:
         self.__ctrl_cinema = ControladorCinema()
-        # self.__ctrl_filme = ControladorFilme()
+        self.__ctrl_filme = ControladorFilme()
         # self.__ctrl_alimento = ControladorAlimento()
         # self.__ctrl_relatorio = ControladorRelatorio()
 
@@ -21,5 +21,5 @@ class ControladorPrincipal():
             print(evento)
             if evento is None:
                 sistema_rodando = False
-            elif evento == 'Lanchonete':
-                pass
+            elif evento == 'Filmes':
+                self.__ctrl_filme.gerencia_sistema()

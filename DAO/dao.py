@@ -22,7 +22,7 @@ class DAO():
         if key in self.__cache:
             raise KeyError
         self.__cache[key] = obj
-        self.__dump()
+        # self.__dump()
 
     def get(self, key):
         if key in self.__cache:
@@ -32,7 +32,7 @@ class DAO():
     def remove(self, key):
         if key in self.__cache:
             self.__cache.pop(key)
-            self.__dump()
+            # self.__dump()
             return
         raise KeyError
 

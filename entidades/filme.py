@@ -2,11 +2,11 @@ from entidades.genero import Genero
 
 
 class Filme():
-    def __init__(self, nome: str, codigo: int) -> None:
+    def __init__(self, nome: str, codigo: int, preco: float) -> None:
         self.__nome = nome
         self.__codigo = codigo
         self.__generos = []  # type: list
-        self.__preco = 20.0
+        self.__preco = preco
 
     @property
     def preco(self):
