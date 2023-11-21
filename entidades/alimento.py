@@ -15,7 +15,7 @@ class Alimento():
     @nome.setter
     def nome(self, novo_nome: str):
         if isinstance(novo_nome, str):
-            self.__generos.append(novo_nome)
+            self.__nome = novo_nome
         else:
             raise TypeError("O argumento fornecido não é do tipo str.")
 
@@ -45,7 +45,7 @@ class Alimento():
     def adicionais(self) -> list:
         return self.__adicionais
 
-    def adiciona_adicional(self, nome):
+    def inclui_adicional(self, nome):
         if isinstance(nome, str):
             self.__adicionais.append(Adicional(nome))
         else:
