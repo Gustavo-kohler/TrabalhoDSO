@@ -1,28 +1,28 @@
 from telas.telaGenero import TelaGenero
 from entidades.genero import Genero
+from DAO.dao_genero import daoGenero as DAO
 
 
 class ControladorGenero():
     def __init__(self) -> None:
         self.__tela = TelaGenero()
-        self.__generos = []  # type: list
+        self.__dao_generos = DAO('generos.pkl')
 
-    def lista_generos(self):
-        return self.__tela.mostra_generos(self.__generos)
+    def generos(self):
+        return self.__dao_generos.get_all()
 
-    def busca_genero(self, codigo: int):
-        for genero in self.__generos:
-            if genero.codigo == codigo:
-                return genero
+    def get(self, key):
+        return self.__dao_generos.get(key)
 
     def adiciona_genero(self):
-        nome = self.__tela.escolhe_nome()
+        generos_existentes = []
 
-        lista_codigos = [genero.codigo for genero in self.__generos]
+        for genero in self.__dao_generos.get_all():
+            genero_existente = f'({genero.codigo}) {genero.nome["nome"]}'
 
-        if len(lista_codigos) == 0:
-            codigo = 1
-        else:
-            codigo = max(lista_codigos) + 1
+            generos_existentes.append(genero_existente)
 
-        self.__generos.append(Genero(nome, codigo))
+        nome = self.__tela.run_tela_genero(generos_existentes)
+        codigo = len(self.__dao_generos.get_all()) + 1
+
+        self.__dao_generos.add(codigo, nome)

@@ -3,21 +3,13 @@ from abc import ABC, abstractmethod
 
 class AbstractTelaItens(ABC):
     @abstractmethod
-    def imprime_operacoes(self):
+    def __init__(self):
         pass
 
     @abstractmethod
-    def escolhe_operacao(self):
+    def init_components(self):
         pass
 
     @abstractmethod
-    def mostra_itens(self):
-        pass
-
-    @abstractmethod
-    def escolhe_codigo(self):
-        pass
-
-    @abstractmethod
-    def escolhe_nome(self):
+    def run_view(self, layout):
         pass
