@@ -32,7 +32,7 @@ class DAO():
     def remove(self, key):
         if key in self.__cache:
             self.__cache.pop(key)
-            # self.__dump()
+            self.__dump()
             return
         raise KeyError
 

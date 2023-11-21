@@ -7,7 +7,7 @@ class daoAlimentos(DAO):
         super().__init__(datasource)
 
     def add(self, key, nome, preco):
-        if key in self.__cache:
+        if key in self._DAO__cache:
             raise KeyError
-        self.__cache[key] = Alimento(nome, key, preco)
-        self.__dump()
+        self._DAO__cache[key] = Alimento(nome, key, preco)
+        self._DAO__dump()
