@@ -41,3 +41,5 @@ class ControladorPrincipal():
                 self.__ctrl_filme.gerencia_sistema()
             elif evento == 'Lanchonete':
                 self.__ctrl_alimento.gerencia_sistema()
+            elif evento == 'Relatório':
+                self.__ctrl_relatorio.gera_relatorio()

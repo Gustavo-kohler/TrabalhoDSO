@@ -137,6 +137,6 @@ class AbstractControladorItens(ABC):
             else:
                 objeto = self.__dao.get(codigo)
                 quantidade = inputs['quantidade']
-                # self.__controlador_relatorio.adiciona_relatorio(
-                #     [objeto, quantidade])
+                self.__controlador_relatorio.adiciona_relatorio(
+                    objeto, quantidade)
                 self.__tela.popup_funcionou()

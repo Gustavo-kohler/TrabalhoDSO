@@ -7,7 +7,7 @@ class daoRelatorio(DAO):
         super().__init__(datasource)
 
     def add(self, key, objeto, quantidade):
-        if key in self.__cache:
+        if key in self._DAO__cache:
             raise KeyError
-        self.__cache[key] = Relatorio(key, objeto, quantidade)
-        self.__dump()
+        self._DAO__cache[key] = Relatorio(key, objeto, quantidade)
+        self._DAO__dump()
