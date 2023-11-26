@@ -1,5 +1,8 @@
-from telas.abstractTelaItens import AbstractTelaItens
 import PySimpleGUI as sg
+from telas.abstractTelaItens import AbstractTelaItens
+from exceptions.valor_vazio_exception import ValorVazioException
+from exceptions.valor_negativo_nulo_exception import ValorNegativoExceptionOuNuloException
+from exceptions.valor_ausente_em_lista_exception import ValorAusenteEmListaException
 
 
 class TelaAlimento(AbstractTelaItens):
@@ -29,7 +32,7 @@ class TelaAlimento(AbstractTelaItens):
             window.close()
             return event
 
-    def run_tela_inclui_adicional(self, alimentos_existentes):
+    def run_tela_inclui_adicional(self, alimentos_existentes, codigos_existentes):
         sg.theme('DarkAmber')
         layout = [
             [
@@ -64,14 +67,26 @@ class TelaAlimento(AbstractTelaItens):
                 event, values = window.read()
                 if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
                     window.close()
+                    self.popup_fecha_tela()
+
                     return None
                 elif event == 'Incluir Adicional':
-                    print(values)
+                    # Convertendo str em int, pode gerar um ValueError
                     codigo_alimento = int(values[1])
+
                     adicional_nome = values[2]
 
-                    if (adicional_nome.isspace()):
-                        raise TypeError
+                    # Verificando se o input código é nulo ou negativo
+                    self.testa_se_input_negativo(
+                        codigo_alimento, 'Código nulo ou negativo não é válido.')
+
+                    # Verificando se o input nome é vazio
+                    self.testa_se_input_vazio(
+                        adicional_nome, 'Adicional vazio ou com espaços não é válido.')
+
+                    # Verifica se o código informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo_alimento, codigos_existentes, 'O código informado não consta nos registros.')
 
                     window.close()
 
@@ -81,4 +96,14 @@ class TelaAlimento(AbstractTelaItens):
                     }
 
             except ValueError:
-                print('Valor inválido para o código.')
+                self.popup_nao_funcionou(
+                    'Pelo menos um dos valores inseridos para código e para adicional não é válido.')
+
+            except ValorAusenteEmListaException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorVazioException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)

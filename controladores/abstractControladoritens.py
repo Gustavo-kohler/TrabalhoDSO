@@ -50,10 +50,6 @@ class AbstractControladorItens(ABC):
 
             self.__tela.popup_funcionou()
 
-        else:
-            motivo = 'Você interrompeu o cadastro.'
-            self.__tela.popup_nao_funcionou(motivo)
-
     def remove_item(self):
         itens_existentes = []
 
@@ -65,10 +61,7 @@ class AbstractControladorItens(ABC):
         inputs = self.__tela.run_tela_remover_item(
             itens_existentes, self.__label)
 
-        if inputs is None:
-            motivo = 'Você interrompeu o cadastro.'
-            self.__tela.popup_nao_funcionou(motivo)
-        else:
+        if not (inputs is None):
             codigo = inputs['codigo']
             todos_codigos = [
                 item.codigo for item in self.__dao.get_all()]
@@ -82,19 +75,18 @@ class AbstractControladorItens(ABC):
 
     def edita_item(self):
         itens_existentes = []
+        codigos_existentes = []
 
         for item in self.__dao.get_all():
             item_existente = f'({item.codigo}) {item.nome}, R$ {item.preco}'
 
             itens_existentes.append(item_existente)
+            codigos_existentes.append(item.codigo)
 
         inputs = self.__tela.run_tela_edita_item(
-            itens_existentes, self.__label)
+            itens_existentes, self.__label, codigos_existentes)
 
-        if inputs is None:
-            motivo = 'Você interrompeu o cadastro.'
-            self.__tela.popup_nao_funcionou(motivo)
-        else:
+        if not (inputs is None):
             codigo_item = inputs['codigo_item']
             novo_nome = inputs['novo_nome']
             novo_preco = inputs['novo_preco']
@@ -115,28 +107,21 @@ class AbstractControladorItens(ABC):
 
     def vende_item(self):
         itens_existentes = []
+        codigos_existentes = []
 
         for item in self.__dao.get_all():
-            item_existente = f'({item.codigo}) {item.nome}'
+            item_existente = f'({item.codigo}) {item.nome}, R$ {item.preco}'
 
             itens_existentes.append(item_existente)
+            codigos_existentes.append(item.codigo)
 
         inputs = self.__tela.run_tela_vender_item(
-            itens_existentes, self.__label)
+            itens_existentes, self.__label, codigos_existentes)
 
-        if inputs is None:
-            motivo = 'Você interrompeu o cadastro.'
-            self.__tela.popup_nao_funcionou(motivo)
-        else:
+        if not (inputs is None):
             codigo = inputs['codigo']
-            todos_codigos = [
-                item.codigo for item in self.__dao.get_all()]
-            if not (codigo in todos_codigos):
-                motivo = 'Não existe filme cadastrado com o código informado.'
-                self.__tela.popup_nao_funcionou(motivo)
-            else:
-                objeto = self.__dao.get(codigo)
-                quantidade = inputs['quantidade']
-                self.__controlador_relatorio.adiciona_relatorio(
-                    objeto, quantidade)
-                self.__tela.popup_funcionou()
+            objeto = self.__dao.get(codigo)
+            quantidade = inputs['quantidade']
+
+            self.__controlador_relatorio.adiciona_relatorio(objeto, quantidade)
+            self.__tela.popup_funcionou()
