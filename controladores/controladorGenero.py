@@ -25,4 +25,6 @@ class ControladorGenero():
         nome = self.__tela.run_tela_genero(generos_existentes)
         codigo = len(self.__dao_generos.get_all()) + 1
 
-        self.__dao_generos.add(codigo, nome)
+        if nome is not None:
+            self.__dao_generos.add(codigo, nome)
+            self.__tela.popup_funcionou()

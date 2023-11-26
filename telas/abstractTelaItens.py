@@ -71,8 +71,6 @@ class AbstractTelaItens(ABC):
                     if nome[0] == ' ':
                         nome = self.retira_espaco_input(nome)
 
-                    print(nome)
-
                     window.close()
                     return {'nome': nome, 'preco': preco}
 
@@ -86,7 +84,7 @@ class AbstractTelaItens(ABC):
             except ValorNegativoExceptionOuNuloException as error:
                 self.popup_nao_funcionou(error)
 
-    def run_tela_remover_item(self, itens, label):
+    def run_tela_remover_item(self, itens, label, codigos):
         sg.theme('DarkAmber')
         layout = [
             [sg.Text(f'Remoção de {label}')],
@@ -115,13 +113,21 @@ class AbstractTelaItens(ABC):
                     self.testa_se_input_negativo(
                         codigo, 'Código nulo ou negativo não é válido.')
 
+                    # Verifica se o código informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo, codigos, 'O código informado não consta nos registros.')
+
                     window.close()
                     return {'codigo': codigo}
 
             except ValueError:
-                print('Valor inválido para o código.')
+                self.popup_nao_funcionou(
+                    'Valor inválido para o código')
 
             except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorAusenteEmListaException as error:
                 self.popup_nao_funcionou(error)
 
     def run_tela_edita_item(self, itens_existentes, label, codigos_existentes):

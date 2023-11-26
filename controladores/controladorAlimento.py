@@ -12,8 +12,6 @@ class ControladorAlimento(AbstractControladorItens):
         while rodando_alimentos:
             categoria = self.tela.run_tela_principal()
 
-            print(categoria)
-
             if categoria == 'Adicionar Alimento':
                 self.adiciona_item()
             elif categoria == 'Remover Alimento':

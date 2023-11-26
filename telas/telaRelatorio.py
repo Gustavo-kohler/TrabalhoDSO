@@ -10,7 +10,7 @@ class TelaRelatorio():
             [sg.Text(f'Total de vendas: R${total_vendas:.2f}')],
             [sg.Button('Voltar')]
         ]
-        print(relatorios_existentes)
+
         window = sg.Window('CineFalcão', layout)
 
         window.read()

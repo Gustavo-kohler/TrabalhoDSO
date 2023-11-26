@@ -34,7 +34,7 @@ class ControladorPrincipal():
         while sistema_rodando:
             self.__ctrl_cinema.gerencia_tela_principal()
             evento = self.__ctrl_cinema.evento
-            print(evento)
+
             if evento is None:
                 sistema_rodando = False
             elif evento == 'Filmes':

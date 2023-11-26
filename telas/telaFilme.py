@@ -1,5 +1,8 @@
 from telas.abstractTelaItens import AbstractTelaItens
 import PySimpleGUI as sg
+from exceptions.valor_vazio_exception import ValorVazioException
+from exceptions.valor_negativo_nulo_exception import ValorNegativoExceptionOuNuloException
+from exceptions.valor_ausente_em_lista_exception import ValorAusenteEmListaException
 
 
 class TelaFilme(AbstractTelaItens):
@@ -30,7 +33,7 @@ class TelaFilme(AbstractTelaItens):
             window.close()
             return event
 
-    def run_tela_inclui_genero(self, filmes_existentes, generos_existentes):
+    def run_tela_inclui_genero(self, filmes_existentes, generos_existentes, codigos_filme, codigos_generos):
         sg.theme('DarkAmber')
         layout = [
             [
@@ -66,11 +69,31 @@ class TelaFilme(AbstractTelaItens):
                 event, values = window.read()
                 if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
                     window.close()
+                    self.popup_fecha_tela()
+
                     return None
                 elif event == 'Incluir Gênero':
-                    print(values)
+                    # Convertendo str em int, pode gerar um ValueError
                     codigo_filme = int(values[2])
+
+                    # Convertendo str em int, pode gerar um ValueError
                     codigo_genero = int(values[3])
+
+                    # Verificando se o input código filme é nulo ou negativo
+                    self.testa_se_input_negativo(
+                        codigo_filme, 'Código de filme nulo ou negativo não é válido.')
+
+                    # Verificando se o input código gênero é nulo ou negativo
+                    self.testa_se_input_negativo(
+                        codigo_genero, 'Código de gênero nulo ou negativo não é válido.')
+
+                    # Verifica se o código gênero informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo_filme, codigos_filme, 'O código informado em filme não consta nos registros.')
+
+                    # Verifica se o código filme informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo_genero, codigos_generos, 'O código informado em gênero não consta nos registros.')
 
                     window.close()
                     return {
@@ -79,4 +102,11 @@ class TelaFilme(AbstractTelaItens):
                     }
 
             except ValueError:
-                print('Valor inválido para o código.')
+                self.popup_nao_funcionou(
+                    'Pelo menos um dos valores inseridos para código e para quantidade não é válido.')
+
+            except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorAusenteEmListaException as error:
+                self.popup_nao_funcionou(error)
