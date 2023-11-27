@@ -6,12 +6,14 @@ class TelaCinema():
         sg.theme('DarkAmber')
 
         layout = [
-            [sg.Button('Lanchonete')],
-            [sg.Button('Filmes')],
-            [sg.Button('Relatório')]
+            [sg.Text('CineFalcão', font=('Arial', 35))],
+            [sg.Text('Seja bem-vindo(a).', font=('Arial', 20))],
+            [sg.Button('Lanchonete', size=(30, 3))],
+            [sg.Button('Filmes', size=(30, 3))],
+            [sg.Button('Relatório', size=(30, 3))]
         ]
 
-        window = sg.Window('CineFalcão').Layout(layout)
+        window = sg.Window('CineFalcão', size=(270, 300)).Layout(layout)
 
         event, not_used_values = window.read()
         if event == sg.WIN_CLOSED:

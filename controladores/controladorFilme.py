@@ -12,8 +12,6 @@ class ControladorFilme(AbstractControladorItens):
         while rodando_filmes:
             categoria = self.tela.run_tela_principal()
 
-            print(categoria)
-
             if categoria == 'Adicionar Filme':
                 self.adiciona_item()
             elif categoria == 'Remover Filme':
@@ -31,11 +29,12 @@ class ControladorFilme(AbstractControladorItens):
 
     def adiciona_genero(self):
         self.__controlador_genero.adiciona_genero()
-        self.tela.popup_funcionou()
 
     def inclui_genero(self):
         filmes_existentes = []
+        filmes_codigos = []
         generos_existentes = []
+        generos_codigos = []
 
         if ((len(self.dao.get_all()) == 0) or (len(self.__controlador_genero.generos()) == 0)):
             motivo = 'Não há filmes e/ou não há gêneros cadastrados.'
@@ -46,19 +45,18 @@ class ControladorFilme(AbstractControladorItens):
                 filme_existente = f'({filme.codigo}) {filme.nome} {generos}'
 
                 filmes_existentes.append(filme_existente)
+                filmes_codigos.append(filme.codigo)
 
             for genero in self.__controlador_genero.generos():
                 genero_existente = f'({genero.codigo}) {genero.nome["nome"]}'
 
                 generos_existentes.append(genero_existente)
+                generos_codigos.append(genero.codigo)
 
             inputs = self.tela.run_tela_inclui_genero(
-                filmes_existentes, generos_existentes)
+                filmes_existentes, generos_existentes, filmes_codigos, generos_codigos)
 
-            if inputs is None:
-                motivo = 'Você interrompeu o cadastro.'
-                self.tela.popup_nao_funcionou(motivo)
-            else:
+            if inputs is not None:
                 filme = self.dao.get(inputs['codigo_filme'])
                 genero = self.__controlador_genero.get(
                     inputs['codigo_genero'])

@@ -1,11 +1,29 @@
 from abc import ABC, abstractmethod
 import PySimpleGUI as sg
+from exceptions.valor_vazio_exception import ValorVazioException
+from exceptions.valor_negativo_nulo_exception import ValorNegativoExceptionOuNuloException
+from exceptions.valor_ausente_em_lista_exception import ValorAusenteEmListaException
 
 
 class AbstractTelaItens(ABC):
     @abstractmethod
     def run_tela_principal(self):
         pass
+
+    def testa_se_input_vazio(self, input, message):
+        if input.isspace() or input == '':
+            raise ValorVazioException(message)
+
+    def testa_se_input_negativo(self, input, message):
+        if input <= 0:
+            raise ValorNegativoExceptionOuNuloException(message)
+
+    def retira_espaco_input(self, input):
+        return input.lstrip()
+
+    def teste_se_input_no_banco(self, input, banco, message):
+        if input not in banco:
+            raise ValorAusenteEmListaException(message)
 
     def run_tela_adicionar_item(self, label):
         sg.theme('DarkAmber')
@@ -27,26 +45,46 @@ class AbstractTelaItens(ABC):
                 event, values = window.read()
                 if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
                     window.close()
+                    self.popup_fecha_tela()
+
                     return None
                 elif event == 'Cadastrar':
                     nome = values[0]
                     preco = values[1]
 
-                    if (nome.isspace()):
-                        raise TypeError
+                    # Verificando se o input nome é vazio
+                    self.testa_se_input_vazio(
+                        nome, 'Nome vazio ou com espaços não é válido.')
 
+                    # Verificando se o input preço é vazio
+                    self.testa_se_input_vazio(
+                        preco, 'Preço vazio ou com espaços não é válido.')
+
+                    # Fazendo a conversão de str para float (pode gerar um ValueError)
                     preco = float(preco)
+
+                    # Verificando se o input preço é negativo
+                    self.testa_se_input_negativo(
+                        preco, 'Preço é nulo ou negativo não é válido.')
+
+                    # Retirando espaços do início do nome, caso tenha
+                    if nome[0] == ' ':
+                        nome = self.retira_espaco_input(nome)
 
                     window.close()
                     return {'nome': nome, 'preco': preco}
 
-            except TypeError:
-                print('Strings vazias ou com espaços não são válidas.')
-
             except ValueError:
-                print('Valor inválido para o preço.')
+                self.popup_nao_funcionou(
+                    'O valor inserido em preço não é valido.')
 
-    def run_tela_remover_item(self, itens, label):
+            except ValorVazioException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)
+
+    def run_tela_remover_item(self, itens, label, codigos):
         sg.theme('DarkAmber')
         layout = [
             [sg.Text(f'Remoção de {label}')],
@@ -64,17 +102,35 @@ class AbstractTelaItens(ABC):
                 event, values = window.read()
                 if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
                     window.close()
+                    self.popup_fecha_tela()
+
                     return None
                 elif event == 'Remover':
+                    # Convertendo str em int, pode gerar um ValueError
                     codigo = int(values[1])
+
+                    # Verificando se o input código é nulo ou negativo
+                    self.testa_se_input_negativo(
+                        codigo, 'Código nulo ou negativo não é válido.')
+
+                    # Verifica se o código informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo, codigos, 'O código informado não consta nos registros.')
 
                     window.close()
                     return {'codigo': codigo}
 
             except ValueError:
-                print('Valor inválido para o código.')
+                self.popup_nao_funcionou(
+                    'Valor inválido para o código')
 
-    def run_tela_edita_item(self, itens_existentes, label):
+            except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorAusenteEmListaException as error:
+                self.popup_nao_funcionou(error)
+
+    def run_tela_edita_item(self, itens_existentes, label, codigos_existentes):
         sg.theme('DarkAmber')
         layout = [
             [
@@ -117,19 +173,43 @@ class AbstractTelaItens(ABC):
                 event, values = window.read()
                 if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
                     window.close()
+                    self.popup_fecha_tela()
+
                     return None
                 elif event == 'Editar':
-                    print(values)
+                    # Converte str em int, pode gerar um ValueError
                     codigo_item = int(values[1])
+
                     novo_nome = values[2]
+                    novo_preco = values[3]
+
+                    # Verificando se o input nome é vazio
+                    self.testa_se_input_vazio(
+                        novo_nome, 'Nome vazio ou com espaços não é válido.')
+
+                    # Retirando espaços do início do nome, caso tenha
+                    if novo_nome[0] == ' ':
+                        novo_nome = self.retira_espaco_input(novo_nome)
+
+                    # Verificando se o input nome é vazio
+                    self.testa_se_input_vazio(
+                        novo_preco, 'Preço vazio ou com espaços não é válido.')
+
+                    # Retirando espaços do início do preço, caso tenha
+                    if novo_preco[0] == ' ':
+                        self.retira_espaco_input(novo_preco)
+
+                    # Verifica se o código informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo_item, codigos_existentes, 'O código informado não consta nos registros.')
 
                     if values[3] != '-':
+                        # Converte str em float, pode gerar um ValueError
                         novo_preco = float(values[3])
-                    else:
-                        novo_preco = values[3]
 
-                    if novo_nome.isspace():
-                        raise TypeError
+                        # Verificando se o input preço é negativo
+                        self.testa_se_input_negativo(
+                            novo_preco, 'Preço nulo ou negativo não é válido.')
 
                     window.close()
                     return {
@@ -139,9 +219,19 @@ class AbstractTelaItens(ABC):
                     }
 
             except ValueError:
-                print('Valor inválido para o código.')
+                self.popup_nao_funcionou(
+                    'Pelo menos um dos valores inseridos para código e para novo preço não é válido.')
 
-    def run_tela_vender_item(self, itens, label):
+            except ValorAusenteEmListaException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorVazioException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)
+
+    def run_tela_vender_item(self, itens, label, codigos_banco):
         sg.theme('DarkAmber')
         layout = [
             [sg.Text(f'Venda de {label}')],
@@ -160,17 +250,40 @@ class AbstractTelaItens(ABC):
                 event, values = window.read()
                 if (event == sg.WIN_CLOSED) or (event == 'Cancelar'):
                     window.close()
+                    self.popup_fecha_tela()
+
                     return None
                 elif event == 'Vender':
-                    print(values)
+                    # Convertendo str em int, pode gerar um ValueError
                     codigo = int(values[1])
+
+                    # Convertendo str em int, pode gerar um ValueError
                     quantidade = int(values[2])
+
+                    # Verificando se o input código é nulo ou negativo
+                    self.testa_se_input_negativo(
+                        codigo, 'Código nulo ou negativo não é válido.')
+
+                    # Verificando se o input quantidade é nulo ou negativo
+                    self.testa_se_input_negativo(
+                        quantidade, 'Quantidade nula ou negativa não é válida.')
+
+                    # Verifica se o código informado consta no banco
+                    self.teste_se_input_no_banco(
+                        codigo, codigos_banco, 'O código informado não consta nos registros.')
 
                     window.close()
                     return {'codigo': codigo, 'quantidade': quantidade}
 
             except ValueError:
-                print('Valor inválido para o código.')
+                self.popup_nao_funcionou(
+                    'Pelo menos um dos valores inseridos para código e para quantidade não é válido.')
+
+            except ValorNegativoExceptionOuNuloException as error:
+                self.popup_nao_funcionou(error)
+
+            except ValorAusenteEmListaException as error:
+                self.popup_nao_funcionou(error)
 
     def popup_nao_funcionou(self, motivo: str):
         sg.theme('DarkAmber')
@@ -189,6 +302,18 @@ class AbstractTelaItens(ABC):
         sg.theme('DarkAmber')
         layout = [
             [sg.Text('Sua operação teve sucesso!')],
+        ]
+
+        window = sg.Window('CineFalcão').Layout(layout)
+
+        event, values = window.read()
+        if (event == sg.WIN_CLOSED):
+            window.close()
+
+    def popup_fecha_tela(self):
+        sg.theme('DarkAmber')
+        layout = [
+            [sg.Text('Operação cancelada.')],
         ]
 
         window = sg.Window('CineFalcão').Layout(layout)

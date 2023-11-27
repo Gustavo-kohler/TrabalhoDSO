@@ -12,8 +12,6 @@ class ControladorAlimento(AbstractControladorItens):
         while rodando_alimentos:
             categoria = self.tela.run_tela_principal()
 
-            print(categoria)
-
             if categoria == 'Adicionar Alimento':
                 self.adiciona_item()
             elif categoria == 'Remover Alimento':
@@ -29,6 +27,7 @@ class ControladorAlimento(AbstractControladorItens):
 
     def inclui_adicional(self):
         alimentos_existentes = []
+        codigos_existentes = []
 
         if (len(self.dao.get_all()) == 0):
             motivo = 'Não há alimentos cadastrados.'
@@ -37,18 +36,17 @@ class ControladorAlimento(AbstractControladorItens):
             for alimento in self.dao.get_all():
                 adicionais = [
                     adicional.nome for adicional in alimento.adicionais]
-                print(type(adicionais))
+
                 alimento_existente = f'({alimento.codigo}) {alimento.nome} {adicionais}'
+
+                codigos_existentes.append(alimento.codigo)
 
                 alimentos_existentes.append(alimento_existente)
 
             inputs = self.tela.run_tela_inclui_adicional(
-                alimentos_existentes)
+                alimentos_existentes, codigos_existentes)
 
-            if inputs is None:
-                motivo = 'Você interrompeu o cadastro.'
-                self.tela.popup_nao_funcionou(motivo)
-            else:
+            if not (inputs is None):
                 alimento = self.dao.get(inputs['codigo_alimento'])
                 adicional = inputs['adicional_nome']
 
